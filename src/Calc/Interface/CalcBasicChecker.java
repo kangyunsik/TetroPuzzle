@@ -1,9 +1,8 @@
-package Calc;
+package Calc.Interface;
 
 import Blocks.Shape;
 import Object.Plate;
 
-public interface CalcEssential {
+public interface CalcBasicChecker {
     boolean isValidLocation(Plate before, int i, int j, Shape shape);
-    boolean isDividingToOdd(Plate resulted);
 }

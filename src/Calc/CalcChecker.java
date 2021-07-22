@@ -1,21 +1,12 @@
 package Calc;
 
 import Blocks.Shape;
+import Calc.Interface.*;
 import Object.Plate;
 
-public class CalcHelpher implements CalcEssential {
+public class CalcChecker implements CalcOptimizer, CalcBasicChecker {
     public int[][] already;
     public int count;
-
-    public Plate calcResult(Plate before, int i, int j, Shape shape) {
-        Plate afterPlate = new Plate(before.getSize());
-        afterPlate.copy(before);
-        for(int a=0;a<4;a++){
-            afterPlate.toZero(i,j,shape);
-        }
-
-        return afterPlate;
-    }
 
     public boolean isValidLocation(Plate before, int i, int j, Shape shape) {
         try {
@@ -24,39 +15,30 @@ public class CalcHelpher implements CalcEssential {
                 if (before.getValue(i + indexes[p][0], j + indexes[p][1]) == 0)
                     return false;
             }
-
             return true;
         } catch (ArrayIndexOutOfBoundsException e) {
             return false;
         }
     }
 
-    public boolean isDividingToOdd(Plate resulted) {
-
+    public boolean isDividingToNotOdd(Plate resulted) {
         already = new int[resulted.getSize()][resulted.getSize()];
 
         for(int i=0;i<resulted.getSize();i++){
             for(int j=0;j<resulted.getSize();j++){
                 if(resulted.getValue(i,j) == 1 && already[i][j] == 0 && !bfs_sol(i,j,resulted)){
-                    return true;
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     private boolean bfs_sol(int x,int y,Plate resulted){
         count = 0;
-
         bfs(x,y,resulted);
-
-        if(count < 4 || count % 4 != 0) {
-            return false;
-        }
-        else
-            return true;
+        return count >= 4 && count % 4 == 0;
     }
-
 
     private void bfs(int x,int y,Plate resulted){
         int[][] dxdy = {{1,0},{-1,0},{0,1},{0,-1}};
