@@ -27,12 +27,7 @@ public class Shape {
     public int[][] getIndexes(){
         return this.indexes;
     }
-
     public int getSize(){
         return this.matrix[0].length;
-    }
-
-    public int getValue(int i,int j){
-        return this.matrix[i][j];
     }
 }
